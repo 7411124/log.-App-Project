@@ -1,0 +1,353 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#0d1b2a">
+
+  <!-- PWA / iOS home screen -->
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="eLogbook">
+  <link rel="apple-touch-icon" href="icons/icon-192.png">
+
+  <link rel="manifest" href="manifest.json">
+  <title>eLogbook</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div id="app">
+
+  <!-- Top bar -->
+  <header class="top-bar">
+    <div class="top-bar-inner">
+      <div>
+        <h1>eLogbook</h1>
+        <div class="subtitle">Operative Case Log</div>
+      </div>
+      <button class="btn-icon" id="exportBtn" title="Export data" aria-label="Export data">
+        <!-- download icon -->
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none"
+             stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+          <polyline points="7 10 12 15 17 10"/>
+          <line x1="12" y1="15" x2="12" y2="3"/>
+        </svg>
+      </button>
+    </div>
+  </header>
+
+  <!-- ── Pages ──────────────────────────────────────────── -->
+
+  <!-- Dashboard -->
+  <main class="page active" id="page-dashboard">
+    <div class="stats-grid" id="statsGrid"></div>
+
+    <div class="section-header">
+      <span class="section-title">Recent Cases</span>
+      <button class="btn btn-ghost text-sm text-teal" id="viewAllBtn">View all</button>
+    </div>
+    <div id="recentList"></div>
+  </main>
+
+  <!-- Log list -->
+  <main class="page" id="page-log">
+    <div class="search-bar">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none"
+           stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/>
+      </svg>
+      <input type="search" id="searchInput" placeholder="Search procedures, supervisors…" autocomplete="off">
+    </div>
+    <div class="filter-chips" id="filterChips"></div>
+    <div id="logList"></div>
+  </main>
+
+  <!-- Stats -->
+  <main class="page" id="page-stats">
+    <h2 class="mb-2">Statistics</h2>
+    <div id="statsDetail"></div>
+  </main>
+
+  <!-- Profile -->
+  <main class="page" id="page-profile">
+    <h2 class="mb-2">Profile</h2>
+    <div class="card">
+      <div class="form-group">
+        <label for="profileName">Full Name</label>
+        <input type="text" id="profileName" placeholder="Mr / Ms / Dr …">
+      </div>
+      <div class="form-group">
+        <label for="profileGrade">Training Grade</label>
+        <select id="profileGrade">
+          <option value="">Select grade</option>
+          <option>CT1</option><option>CT2</option>
+          <option>ST1</option><option>ST2</option><option>ST3</option>
+          <option>ST4</option><option>ST5</option><option>ST6</option><option>ST7</option><option>ST8</option>
+          <option>Fellow</option><option>Consultant</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label for="profileSpecialty">Specialty</label>
+        <select id="profileSpecialty">
+          <option value="">Select specialty</option>
+          <option>General Surgery</option>
+          <option>Colorectal Surgery</option>
+          <option>Upper GI Surgery</option>
+          <option>Hepatobiliary Surgery</option>
+          <option>Vascular Surgery</option>
+          <option>Trauma &amp; Orthopaedics</option>
+          <option>Urology</option>
+          <option>Cardiothoracic Surgery</option>
+          <option>Neurosurgery</option>
+          <option>ENT</option>
+          <option>Maxillofacial Surgery</option>
+          <option>Plastics &amp; Reconstructive</option>
+          <option>Paediatric Surgery</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label for="profileHospital">Hospital / Trust</label>
+        <input type="text" id="profileHospital" placeholder="e.g. Royal London Hospital">
+      </div>
+      <button class="btn btn-primary" id="saveProfileBtn">Save Profile</button>
+    </div>
+    <div class="card mt-2">
+      <p class="text-sm text-muted mb-2">All data is stored locally on this device. Use the export button to back up your logbook as JSON.</p>
+      <button class="btn btn-danger w-full" id="clearDataBtn">Clear All Data</button>
+    </div>
+  </main>
+
+  <!-- Bottom nav -->
+  <nav class="bottom-nav">
+    <button class="nav-btn active" data-page="dashboard">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none"
+           stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/>
+        <rect x="3" y="14" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/>
+      </svg>
+      Dashboard
+    </button>
+    <button class="nav-btn" data-page="log">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none"
+           stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
+        <polyline points="14 2 14 8 20 8"/>
+        <line x1="16" y1="13" x2="8" y2="13"/>
+        <line x1="16" y1="17" x2="8" y2="17"/>
+        <polyline points="10 9 9 9 8 9"/>
+      </svg>
+      Cases
+    </button>
+    <button class="nav-btn" data-page="stats">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none"
+           stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <line x1="18" y1="20" x2="18" y2="10"/>
+        <line x1="12" y1="20" x2="12" y2="4"/>
+        <line x1="6" y1="20" x2="6" y2="14"/>
+      </svg>
+      Stats
+    </button>
+    <button class="nav-btn" data-page="profile">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none"
+           stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/>
+        <circle cx="12" cy="7" r="4"/>
+      </svg>
+      Profile
+    </button>
+  </nav>
+
+  <!-- FAB (log new case) -->
+  <button class="fab" id="fabBtn" aria-label="Log new case">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none"
+         stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+      <line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/>
+    </svg>
+  </button>
+
+  <!-- ── Add / Edit case modal ─────────────────────────── -->
+  <div class="modal-overlay" id="caseModal" role="dialog" aria-modal="true" aria-label="Log case">
+    <div class="modal-sheet">
+      <div class="modal-handle"></div>
+      <h2 class="modal-title" id="modalTitle">Log New Case</h2>
+
+      <form id="caseForm" novalidate>
+
+        <p class="form-section-title">Procedure Details</p>
+
+        <div class="form-group">
+          <label for="fieldDate">Date *</label>
+          <input type="date" id="fieldDate" required>
+        </div>
+
+        <div class="form-group">
+          <label for="fieldProcedure">Procedure Name *</label>
+          <input type="text" id="fieldProcedure" placeholder="e.g. Laparoscopic appendicectomy" required autocomplete="off">
+        </div>
+
+        <div class="form-group">
+          <label for="fieldSpecialty">Specialty *</label>
+          <select id="fieldSpecialty" required>
+            <option value="">Select…</option>
+            <option>General Surgery</option>
+            <option>Colorectal Surgery</option>
+            <option>Upper GI Surgery</option>
+            <option>Hepatobiliary Surgery</option>
+            <option>Vascular Surgery</option>
+            <option>Trauma &amp; Orthopaedics</option>
+            <option>Urology</option>
+            <option>Cardiothoracic Surgery</option>
+            <option>Neurosurgery</option>
+            <option>ENT</option>
+            <option>Maxillofacial Surgery</option>
+            <option>Plastics &amp; Reconstructive</option>
+            <option>Paediatric Surgery</option>
+          </select>
+        </div>
+
+        <div class="form-row">
+          <div class="form-group">
+            <label for="fieldApproach">Approach</label>
+            <select id="fieldApproach">
+              <option value="">Select…</option>
+              <option>Open</option>
+              <option>Laparoscopic</option>
+              <option>Robotic</option>
+              <option>Endoscopic</option>
+              <option>Percutaneous</option>
+              <option>Other</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="fieldUrgency">Urgency</label>
+            <select id="fieldUrgency">
+              <option value="">Select…</option>
+              <option>Elective</option>
+              <option>Urgent</option>
+              <option>Emergency</option>
+            </select>
+          </div>
+        </div>
+
+        <p class="form-section-title">Role &amp; Supervision</p>
+
+        <div class="form-group">
+          <label for="fieldRole">Your Role *</label>
+          <select id="fieldRole" required>
+            <option value="">Select…</option>
+            <option>Surgeon</option>
+            <option>Surgical Assistant</option>
+            <option>First Assistant</option>
+            <option>Observer</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label for="fieldSupervision">Supervision Level</label>
+          <select id="fieldSupervision">
+            <option value="">Select…</option>
+            <option value="1">1 — Performed independently</option>
+            <option value="2">2 — Completed with supervisor scrubbed</option>
+            <option value="3">3 — Completed with assistance</option>
+            <option value="4">4 — Assisted trainer</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label for="fieldSupervisor">Supervisor Name</label>
+          <input type="text" id="fieldSupervisor" placeholder="e.g. Mr J Smith" autocomplete="off">
+        </div>
+
+        <p class="form-section-title">Patient &amp; Setting</p>
+
+        <div class="form-row">
+          <div class="form-group">
+            <label for="fieldAge">Patient Age</label>
+            <input type="number" id="fieldAge" placeholder="yrs" min="0" max="120">
+          </div>
+          <div class="form-group">
+            <label for="fieldSex">Patient Sex</label>
+            <select id="fieldSex">
+              <option value="">Select…</option>
+              <option>Male</option>
+              <option>Female</option>
+              <option>Not specified</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="fieldASA">ASA Grade</label>
+          <select id="fieldASA">
+            <option value="">Select…</option>
+            <option>I</option><option>II</option><option>III</option>
+            <option>IV</option><option>V</option><option>VI</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label for="fieldSetting">Setting</label>
+          <select id="fieldSetting">
+            <option value="">Select…</option>
+            <option>Main Theatre</option>
+            <option>Day Surgery Unit</option>
+            <option>Emergency Theatre</option>
+            <option>Endoscopy Suite</option>
+            <option>Radiology</option>
+            <option>Bedside / Ward</option>
+          </select>
+        </div>
+
+        <p class="form-section-title">Reflection</p>
+
+        <div class="form-group">
+          <label for="fieldFindings">Operative Findings</label>
+          <textarea id="fieldFindings" rows="2" placeholder="Key intraoperative findings…"></textarea>
+        </div>
+
+        <div class="form-group">
+          <label for="fieldComplications">Complications</label>
+          <textarea id="fieldComplications" rows="2" placeholder="None / describe any complications…"></textarea>
+        </div>
+
+        <div class="form-group">
+          <label for="fieldReflection">Reflection / Learning Points</label>
+          <textarea id="fieldReflection" rows="3" placeholder="What went well? What would you do differently?"></textarea>
+        </div>
+
+        <button type="submit" class="btn btn-primary mt-2" id="saveBtn">Save Case</button>
+        <button type="button" class="btn btn-secondary mt-1 w-full" id="cancelBtn">Cancel</button>
+
+      </form>
+    </div>
+  </div>
+
+  <!-- ── Case detail modal ─────────────────────────────── -->
+  <div class="modal-overlay" id="detailModal" role="dialog" aria-modal="true" aria-label="Case detail">
+    <div class="modal-sheet">
+      <div class="modal-handle"></div>
+      <div id="detailContent"></div>
+    </div>
+  </div>
+
+  <!-- ── Confirm delete dialog ─────────────────────────── -->
+  <div class="confirm-overlay" id="confirmOverlay">
+    <div class="confirm-box">
+      <h3>Delete Case?</h3>
+      <p>This cannot be undone.</p>
+      <div class="confirm-actions">
+        <button class="btn btn-secondary" id="confirmNo">Cancel</button>
+        <button class="btn btn-danger" id="confirmYes">Delete</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Toast -->
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+</div><!-- #app -->
+
+<script src="app.js"></script>
+</body>
+</html>

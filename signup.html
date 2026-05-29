@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>log. — Create your account</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Sora:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="signup.css">
+</head>
+<body>
+
+  <div class="screen" id="screen-method">
+    <a class="back-link" href="landing.html">← Back</a>
+    <div class="auth-card">
+      <div class="logo">log.</div>
+      <p class="tagline">your surgical logbook, automated.</p>
+
+      <form id="emailForm" novalidate>
+        <div class="field-group">
+          <input
+            type="email"
+            id="emailInput"
+            class="field"
+            placeholder="name@hospital.nhs.uk"
+            autocomplete="email"
+            inputmode="email"
+            required
+          >
+          <p class="field-hint">Use your NHS or institutional email address.</p>
+        </div>
+        <button type="submit" class="btn-continue" id="continueBtn">continue</button>
+      </form>
+
+      <div class="toggle-pill">
+        <button class="toggle-btn" id="loginToggle" onclick="window.location.href='login.html'">log in</button>
+        <button class="toggle-btn active" id="signupToggle">sign up</button>
+      </div>
+
+      <div class="divider"><span>or</span></div>
+
+      <button class="btn-apple">
+        <svg viewBox="0 0 24 24" fill="currentColor" width="18" height="18" aria-hidden="true">
+          <path d="M17.05 20.28c-.98.95-2.05.8-3.08.35-1.09-.46-2.09-.48-3.24 0-1.44.62-2.2.44-3.06-.35C2.79 15.25 3.51 7.7 9.05 7.4c1.39.07 2.36.74 3.19.8 1.25-.25 2.43-.97 3.74-.84 1.58.18 2.77.84 3.54 2.07-3.24 1.92-2.44 6.02.52 7.35-.46 1.19-1.06 2.36-2.99 3.5zM12.03 7.25c-.15-2.23 1.66-4.07 3.74-4.25.29 2.58-2.34 4.5-3.74 4.25z"/>
+        </svg>
+        continue with Apple
+      </button>
+    </div>
+  </div>
+
+  <!-- Step 2: Account details (shown after email entered) -->
+  <div class="screen hidden" id="screen-details">
+    <a class="back-link" href="#" id="backToEmail">← Back</a>
+    <div class="auth-card">
+      <div class="logo">log.</div>
+      <h2 class="step-heading">Create your account</h2>
+      <p class="step-sub">One more step and you're in.</p>
+
+      <form id="detailsForm" novalidate>
+
+        <div class="field-row">
+          <div class="field-group">
+            <label class="field-label">First name</label>
+            <input type="text" class="field" placeholder="Jane" autocomplete="given-name" required>
+          </div>
+          <div class="field-group">
+            <label class="field-label">Last name</label>
+            <input type="text" class="field" placeholder="Smith" autocomplete="family-name" required>
+          </div>
+        </div>
+
+        <div class="field-group">
+          <label class="field-label">Email address</label>
+          <input type="email" class="field field-locked" id="confirmedEmail" readonly tabindex="-1">
+        </div>
+
+        <div class="field-group">
+          <label class="field-label">Institutional / NHS email <span class="field-required">*</span></label>
+          <input type="email" class="field" placeholder="j.smith@nhs.net" autocomplete="off" required>
+          <p class="field-hint">Must end in .nhs.uk, .nhs.net, or your trust domain.</p>
+        </div>
+
+        <div class="field-group">
+          <label class="field-label">Password</label>
+          <div class="field-wrap">
+            <input type="password" class="field" id="passwordInput" placeholder="8+ characters" autocomplete="new-password" required minlength="8">
+            <button type="button" class="field-toggle" id="togglePw" aria-label="Show password">
+              <svg id="eyeIcon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="18" height="18">
+                <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/>
+              </svg>
+            </button>
+          </div>
+        </div>
+
+        <div class="field-group">
+          <label class="field-label">Training grade</label>
+          <div class="select-wrap">
+            <select class="field" required>
+              <option value="">Select your grade…</option>
+              <optgroup label="Core Surgery">
+                <option>CT1</option>
+                <option>CT2</option>
+              </optgroup>
+              <optgroup label="Higher Surgery">
+                <option>ST3</option><option>ST4</option><option>ST5</option>
+                <option>ST6</option><option>ST7</option><option>ST8</option>
+              </optgroup>
+              <optgroup label="Other">
+                <option>Fellow</option>
+                <option>Consultant</option>
+                <option>SAS Doctor</option>
+                <option>Other</option>
+              </optgroup>
+            </select>
+          </div>
+        </div>
+
+        <div class="field-group">
+          <label class="field-label">Specialty</label>
+          <div class="select-wrap">
+            <select class="field" required>
+              <option value="">Select your specialty…</option>
+              <option>General Surgery</option>
+              <option>Colorectal Surgery</option>
+              <option>Upper GI Surgery</option>
+              <option>Hepatobiliary Surgery</option>
+              <option>Vascular Surgery</option>
+              <option>Trauma &amp; Orthopaedics</option>
+              <option>Urology</option>
+              <option>Cardiothoracic Surgery</option>
+              <option>Neurosurgery</option>
+              <option>ENT</option>
+              <option>Maxillofacial Surgery</option>
+              <option>Plastics &amp; Reconstructive</option>
+              <option>Paediatric Surgery</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="field-group">
+          <label class="field-label">Deanery / Region</label>
+          <div class="select-wrap">
+            <select class="field">
+              <option value="">Select your deanery…</option>
+              <option>London</option>
+              <option>South East</option>
+              <option>South West</option>
+              <option>East of England</option>
+              <option>East Midlands</option>
+              <option>West Midlands</option>
+              <option>Yorkshire &amp; Humber</option>
+              <option>North East</option>
+              <option>North West</option>
+              <option>Wales</option>
+              <option>Scotland</option>
+              <option>Northern Ireland</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="field-group">
+          <label class="field-label">Current hospital / trust</label>
+          <input type="text" class="field" placeholder="e.g. Royal London Hospital" autocomplete="organization">
+        </div>
+
+        <label class="checkbox-label">
+          <input type="checkbox" class="checkbox" required>
+          <span>I agree to the <a href="#" class="link">Terms of Service</a> and <a href="#" class="link">Privacy Policy</a></span>
+        </label>
+
+        <label class="checkbox-label">
+          <input type="checkbox" class="checkbox">
+          <span>Send me occasional product updates and surgical education tips</span>
+        </label>
+
+        <button type="submit" class="btn-continue mt-lg">Create account</button>
+
+      </form>
+    </div>
+  </div>
+
+  <!-- Step 3: Verify email -->
+  <div class="screen hidden" id="screen-verify">
+    <div class="auth-card auth-card-center">
+      <div class="verify-icon">✉️</div>
+      <div class="logo logo-sm">log.</div>
+      <h2 class="step-heading">Check your email</h2>
+      <p class="step-sub">We've sent a verification link to <strong id="verifyEmail"></strong>. Click the link to activate your account.</p>
+      <p class="resend-note">Didn't get it? <a href="#" class="link" id="resendLink">Resend email</a></p>
+      <a href="landing.html" class="btn-ghost-full">Back to home</a>
+    </div>
+  </div>
+
+  <script src="signup.js"></script>
+</body>
+</html>
