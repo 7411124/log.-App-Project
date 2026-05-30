@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>log. — Log a case</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Sora:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="manual-case.css?v=3">
+</head>
+<body>
+
+  <header class="header">
+    <a class="header-back" href="add-case.html">← Back</a>
+    <span class="header-logo">log.</span>
+    <button class="header-save" id="saveBtn">Save</button>
+  </header>
+
+  <main class="main">
+
+    <!-- 1. Patient ID -->
+    <div class="field-section">
+      <label class="field-label">Patient ID</label>
+      <input type="text" class="field" id="patientId" placeholder="e.g. NHS number or local ID" autocomplete="off" autocorrect="off" spellcheck="false">
+    </div>
+
+    <!-- 2. Age -->
+    <div class="field-section">
+      <label class="field-label">Age</label>
+      <input type="number" class="field field-short" id="patientAge" placeholder="e.g. 64" min="0" max="120" inputmode="numeric">
+    </div>
+
+    <!-- 3. Date -->
+    <div class="field-section">
+      <label class="field-label">Date</label>
+      <div class="date-row">
+        <input type="date" class="field field-date" id="dateInput">
+        <button class="btn-today" id="todayBtn">Today</button>
+      </div>
+    </div>
+
+    <!-- 4. CEPOD -->
+    <div class="field-section">
+      <div class="section-header">
+        <label class="field-label">CEPOD</label>
+        <button class="info-btn" data-group="cepod">?</button>
+      </div>
+      <div class="pill-row" id="cepodRow">
+        <button class="pill" data-val="Emergency">Emergency</button>
+        <button class="pill" data-val="Urgency">Urgency</button>
+        <button class="pill" data-val="Scheduled">Scheduled</button>
+        <button class="pill" data-val="Elective">Elective</button>
+      </div>
+    </div>
+
+    <!-- 5. ASA -->
+    <div class="field-section">
+      <div class="section-header">
+        <label class="field-label">ASA</label>
+        <button class="info-btn" data-group="asa">?</button>
+      </div>
+      <div class="pill-row" id="asaRow">
+        <button class="pill" data-val="I">I</button>
+        <button class="pill" data-val="II">II</button>
+        <button class="pill" data-val="III">III</button>
+        <button class="pill" data-val="IV">IV</button>
+        <button class="pill" data-val="V">V</button>
+      </div>
+    </div>
+
+    <!-- 6. Consultant -->
+    <div class="field-section">
+      <label class="field-label">Consultant</label>
+      <div class="chip-row" id="consultantChips"></div>
+      <div class="search-field-wrap" style="margin-top:0.5rem">
+        <input type="text" class="field" id="consultantInput" placeholder="Search other consultant…" autocomplete="off">
+        <ul class="dropdown hidden" id="consultantList"></ul>
+      </div>
+    </div>
+
+    <!-- 7. Supervision -->
+    <div class="field-section">
+      <div class="section-header">
+        <label class="field-label">Supervision</label>
+        <button class="info-btn" data-group="supervision">?</button>
+      </div>
+      <div class="pill-row" id="supervisionRow">
+        <button class="pill" data-val="Observed">Observed</button>
+        <button class="pill" data-val="Assisting">Assisting</button>
+        <button class="pill" data-val="S-TS">S-TS</button>
+        <button class="pill" data-val="S-TU">S-TU</button>
+        <button class="pill" data-val="Performed">Performed</button>
+        <button class="pill" data-val="Training">Training</button>
+      </div>
+    </div>
+
+    <!-- 8. Robotic -->
+    <div class="field-section field-section-sm">
+      <label class="toggle-row">
+        <span class="field-label">Robotic assisted</span>
+        <label class="switch">
+          <input type="checkbox" id="roboticToggle">
+          <span class="switch-track"></span>
+        </label>
+      </label>
+    </div>
+
+    <!-- 9. Operation -->
+    <div class="field-section">
+      <label class="field-label">Operation</label>
+      <div class="tab-bar tab-bar--underline" id="opTabBar"></div>
+      <div class="tab-content" id="opTabContent"></div>
+    </div>
+
+    <!-- 10. Hospital -->
+    <div class="field-section">
+      <label class="field-label">Hospital</label>
+      <div class="tab-bar" id="hospTabBar"></div>
+      <div class="tab-content" id="hospTabContent"></div>
+    </div>
+
+    <!-- 11. Notes + voice -->
+    <div class="field-section">
+      <div class="section-header">
+        <label class="field-label">Notes <span class="label-optional">optional</span></label>
+        <button class="voice-note-btn" id="voiceNoteBtn" aria-label="Dictate notes">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" width="16" height="16">
+            <rect x="9" y="2" width="6" height="11" rx="3"/>
+            <path d="M5 10a7 7 0 0 0 14 0"/>
+            <line x1="12" y1="21" x2="12" y2="17"/>
+            <line x1="8" y1="21" x2="16" y2="21"/>
+          </svg>
+        </button>
+      </div>
+      <textarea class="field field-textarea" id="notesInput" placeholder="Tap the mic to dictate, or type here…" rows="3"></textarea>
+    </div>
+
+    <button class="btn-save" id="saveBtnBottom">Save case</button>
+
+  </main>
+
+  <!-- Info popup -->
+  <div class="info-popup hidden" id="infoPopup">
+    <div class="info-popup-inner">
+      <button class="info-popup-close" id="infoPopupClose">✕</button>
+      <h3 class="info-popup-title" id="infoPopupTitle"></h3>
+      <ul class="info-popup-list" id="infoPopupList"></ul>
+    </div>
+  </div>
+
+  <script src="manual-case.js?v=3"></script>
+</body>
+</html>

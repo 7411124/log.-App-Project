@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>log. — Add case</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Sora:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="add-case.css?v=2">
+</head>
+<body>
+
+  <!-- Header -->
+  <header class="header">
+    <a class="header-back" href="#">← Back</a>
+    <span class="header-logo">log.</span>
+    <span></span>
+  </header>
+
+  <!-- Add case screen -->
+  <main class="main">
+    <div class="heading-wrap">
+      <h1 class="heading">Add a case</h1>
+      <p class="subheading">How would you like to log it?</p>
+    </div>
+
+    <div class="icon-options">
+
+      <button class="option-icon-btn" id="voiceBtn" aria-label="Voice">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+          <rect x="9" y="2" width="6" height="11" rx="3"/>
+          <path d="M5 10a7 7 0 0 0 14 0"/>
+          <line x1="12" y1="21" x2="12" y2="17"/>
+          <line x1="8" y1="21" x2="16" y2="21"/>
+        </svg>
+      </button>
+
+      <button class="option-icon-btn" id="cameraBtn" aria-label="Camera">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/>
+          <circle cx="12" cy="13" r="4"/>
+        </svg>
+      </button>
+
+      <button class="option-icon-btn" id="manualBtn" aria-label="Manual">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M12 20h9"/>
+          <path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/>
+        </svg>
+      </button>
+
+    </div>
+
+    <!-- Info button -->
+    <button class="info-btn" id="infoBtn" aria-label="More info">i</button>
+  </main>
+
+  <!-- Info popup -->
+  <div class="info-popup hidden" id="infoPopup">
+    <div class="info-popup-inner">
+      <button class="info-popup-close" id="infoClose">✕</button>
+      <h3 class="info-popup-title">Logging options</h3>
+      <ul class="info-list">
+        <li>
+          <span class="info-icon-wrap">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+              <rect x="9" y="2" width="6" height="11" rx="3"/>
+              <path d="M5 10a7 7 0 0 0 14 0"/>
+              <line x1="12" y1="21" x2="12" y2="17"/>
+              <line x1="8" y1="21" x2="16" y2="21"/>
+            </svg>
+          </span>
+          <span class="info-text">
+            <strong>Voice</strong>
+            Dictate your case — procedure, role and supervisor — and we'll fill in the fields automatically.
+          </span>
+        </li>
+        <li>
+          <span class="info-icon-wrap">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/>
+              <circle cx="12" cy="13" r="4"/>
+            </svg>
+          </span>
+          <span class="info-text">
+            <strong>Camera</strong>
+            Photograph the theatre op list. We'll extract your cases and delete the image immediately.
+          </span>
+        </li>
+        <li>
+          <span class="info-icon-wrap">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M12 20h9"/>
+              <path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/>
+            </svg>
+          </span>
+          <span class="info-text">
+            <strong>Manual</strong>
+            Enter your case details by hand.
+          </span>
+        </li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- Voice recording overlay -->
+  <div class="overlay hidden" id="voiceOverlay">
+    <div class="overlay-card">
+      <div class="pulse-ring">
+        <div class="pulse-dot" id="pulseDot">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" width="32" height="32">
+            <rect x="9" y="2" width="6" height="11" rx="3"/>
+            <path d="M5 10a7 7 0 0 0 14 0"/>
+            <line x1="12" y1="21" x2="12" y2="17"/>
+            <line x1="8" y1="21" x2="16" y2="21"/>
+          </svg>
+        </div>
+      </div>
+      <p class="overlay-title" id="voiceStatus">Listening…</p>
+      <p class="overlay-hint">Say the procedure, your role, and your supervisor</p>
+      <p class="overlay-example">"Laparoscopic appendicectomy, surgeon, supervised by Mr Smith, emergency, laparoscopic"</p>
+      <div class="transcript-box hidden" id="transcriptBox">
+        <p class="transcript-text" id="transcriptText"></p>
+      </div>
+      <div class="overlay-actions">
+        <button class="btn-stop" id="stopVoiceBtn">Stop</button>
+        <button class="btn-cancel-overlay" id="cancelVoiceBtn">Cancel</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Camera overlay -->
+  <div class="overlay hidden" id="cameraOverlay">
+    <div class="overlay-card">
+      <div class="camera-icon-wrap">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" width="40" height="40">
+          <path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/>
+          <circle cx="12" cy="13" r="4"/>
+        </svg>
+      </div>
+      <p class="overlay-title">Photograph op list</p>
+      <p class="overlay-hint">Point your camera at the theatre op list. We'll extract your cases and immediately delete the image.</p>
+      <div class="gdpr-badge">🔒 Image deleted immediately after processing</div>
+      <input type="file" accept="image/*" capture="environment" id="cameraInput" style="display:none">
+      <button class="btn-stop" id="openCameraBtn">Open camera</button>
+      <button class="btn-cancel-overlay" id="cancelCameraBtn">Cancel</button>
+    </div>
+  </div>
+
+  <script src="add-case.js?v=2"></script>
+</body>
+</html>

@@ -347,5 +347,256 @@ select.field { cursor: pointer; }
 
 .resend-note .link { color: var(--text-secondary); }
 
+/* ── Autocomplete ─────────────────────────────────────────── */
+.autocomplete-wrap { position: relative; }
+
+.autocomplete-list {
+  position: absolute;
+  top: calc(100% + 4px);
+  left: 0; right: 0;
+  background: var(--surface-2);
+  border: 1px solid var(--border-focus);
+  border-radius: var(--radius);
+  list-style: none;
+  z-index: 50;
+  max-height: 220px;
+  overflow-y: auto;
+  box-shadow: 0 8px 32px rgba(0,0,0,0.5);
+}
+
+.autocomplete-list.hidden { display: none; }
+
+.autocomplete-list li {
+  padding: 0.75rem 1rem;
+  font-size: 0.9rem;
+  color: var(--text-secondary);
+  cursor: pointer;
+  border-bottom: 1px solid var(--border);
+  transition: background 0.1s, color 0.1s;
+}
+
+.autocomplete-list li:last-child { border-bottom: none; }
+.autocomplete-list li:hover,
+.autocomplete-list li.active {
+  background: rgba(255,255,255,0.06);
+  color: var(--text);
+}
+
+.autocomplete-list li strong { color: var(--text); font-weight: 600; }
+
+/* ── Tab/toggle buttons (replace checkboxes) ─────────────── */
+.tab-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-top: 0.25rem;
+}
+
+.tab-btn {
+  padding: 0.5rem 1.1rem;
+  border-radius: 999px;
+  border: 1px solid var(--border);
+  background: var(--surface);
+  color: var(--text-secondary);
+  font-family: inherit;
+  font-size: 0.875rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background 0.15s, color 0.15s, border-color 0.15s;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.tab-btn:hover {
+  border-color: var(--border-focus);
+  color: var(--text);
+}
+
+.tab-btn.selected {
+  background: var(--text);
+  border-color: var(--text);
+  color: var(--black);
+  font-weight: 600;
+}
+
+/* ── Hospital modal popup ─────────────────────────────────── */
+.modal-backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 200;
+  background: rgba(0,0,0,0.75);
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  padding: 0;
+}
+
+.modal-backdrop.hidden { display: none; }
+
+.modal-popup {
+  background: #161616;
+  border-radius: 24px 24px 0 0;
+  border-top: 1px solid var(--border);
+  width: 100%;
+  max-width: 480px;
+  padding: 2rem 1.5rem 2.5rem;
+  max-height: 75vh;
+  overflow-y: auto;
+}
+
+.modal-popup-header { margin-bottom: 1.5rem; }
+
+.modal-popup-title {
+  font-size: 1.2rem;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  margin-bottom: 0.25rem;
+}
+
+.modal-popup-sub {
+  font-size: 0.85rem;
+  color: var(--text-secondary);
+}
+
+.modal-popup .btn-continue {
+  margin-top: 1.75rem;
+}
+
+/* ── Chip checkboxes ──────────────────────────────────────── */
+.checkbox-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-top: 0.25rem;
+}
+
+.chip-check {
+  cursor: pointer;
+}
+
+.chip-check input[type="checkbox"] {
+  position: absolute !important;
+  opacity: 0 !important;
+  width: 0 !important;
+  height: 0 !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  pointer-events: none !important;
+  appearance: none !important;
+  -webkit-appearance: none !important;
+}
+
+.chip-check span {
+  display: inline-block;
+  padding: 0.45rem 1rem;
+  border-radius: 999px;
+  font-size: 0.85rem;
+  font-weight: 500;
+  border: 1px solid var(--border);
+  background: var(--surface);
+  color: var(--text-secondary);
+  transition: background 0.15s, color 0.15s, border-color 0.15s;
+  user-select: none;
+}
+
+.chip-check input:checked + span {
+  background: rgba(255,255,255,0.1);
+  border-color: rgba(255,255,255,0.35);
+  color: var(--text);
+}
+
+/* ── Tag input ────────────────────────────────────────────── */
+.tag-input-wrap {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 0.6rem 0.75rem;
+  transition: border-color 0.15s, box-shadow 0.15s;
+}
+
+.tag-input-wrap:focus-within {
+  border-color: var(--border-focus);
+  box-shadow: 0 0 0 3px rgba(255,255,255,0.06);
+}
+
+.tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+  margin-bottom: 0.4rem;
+}
+
+.tags:empty { margin-bottom: 0; }
+
+.tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  background: rgba(255,255,255,0.1);
+  border: 1px solid rgba(255,255,255,0.15);
+  border-radius: 999px;
+  padding: 0.25rem 0.75rem;
+  font-size: 0.82rem;
+  font-weight: 500;
+  color: var(--text);
+}
+
+.tag-remove {
+  background: none;
+  border: none;
+  color: var(--text-muted);
+  cursor: pointer;
+  font-size: 1rem;
+  line-height: 1;
+  padding: 0;
+  display: flex;
+  align-items: center;
+  transition: color 0.15s;
+}
+
+.tag-remove:hover { color: var(--text); }
+
+.tag-input {
+  background: none;
+  border: none;
+  padding: 0.25rem 0;
+  font-size: 0.9rem;
+  box-shadow: none;
+  width: 100%;
+}
+
+.tag-input:focus { box-shadow: none; border-color: transparent; }
+
+/* ── Prefs divider ────────────────────────────────────────── */
+.prefs-divider {
+  height: 1px;
+  background: var(--border);
+  margin: 0.5rem 0 1.75rem;
+}
+
+.mb-hint { margin-bottom: 0.75rem; }
+
+/* ── Plus button ──────────────────────────────────────────── */
+.plus-btn {
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  border: 1.5px dashed rgba(255,255,255,0.25);
+  background: none;
+  color: rgba(255,255,255,0.4);
+  font-size: 1.3rem;
+  font-weight: 300;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  transition: border-color 0.15s, color 0.15s;
+}
+
+.plus-btn:hover {
+  border-color: rgba(255,255,255,0.5);
+  color: rgba(255,255,255,0.7);
+}
+
 /* ── Utilities ────────────────────────────────────────────── */
 .mt-lg { margin-top: 1.25rem; }

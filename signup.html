@@ -70,14 +70,15 @@
         </div>
 
         <div class="field-group">
-          <label class="field-label">Email address</label>
+          <label class="field-label">NHS / Institutional email <span class="field-required">*</span></label>
           <input type="email" class="field field-locked" id="confirmedEmail" readonly tabindex="-1">
+          <p class="field-hint">Must end in .nhs.uk, .nhs.net, or your trust domain.</p>
         </div>
 
         <div class="field-group">
-          <label class="field-label">Institutional / NHS email <span class="field-required">*</span></label>
-          <input type="email" class="field" placeholder="j.smith@nhs.net" autocomplete="off" required>
-          <p class="field-hint">Must end in .nhs.uk, .nhs.net, or your trust domain.</p>
+          <label class="field-label">GMC / Professional registration number <span class="field-required">*</span></label>
+          <input type="text" class="field" placeholder="e.g. 7654321" inputmode="numeric" autocomplete="off" required>
+          <p class="field-hint">Your 7-digit GMC number or equivalent registration number.</p>
         </div>
 
         <div class="field-group">
@@ -158,10 +159,6 @@
           </div>
         </div>
 
-        <div class="field-group">
-          <label class="field-label">Current hospital / trust</label>
-          <input type="text" class="field" placeholder="e.g. Royal London Hospital" autocomplete="organization">
-        </div>
 
         <label class="checkbox-label">
           <input type="checkbox" class="checkbox" required>
@@ -179,7 +176,99 @@
     </div>
   </div>
 
-  <!-- Step 3: Verify email -->
+  <!-- Step 3: Preferences page 1 -->
+  <div class="screen hidden" id="screen-prefs">
+    <a class="back-link" href="#" id="backToDetails">← Back</a>
+    <div class="auth-card">
+      <div class="logo">log.</div>
+      <h2 class="step-heading">Set up your workspace</h2>
+      <p class="step-sub">Tell us where you work and what you do.</p>
+
+      <form id="prefsForm" novalidate>
+
+        <!-- Trust autocomplete -->
+        <div class="field-group">
+          <label class="field-label">Current NHS trust / health board</label>
+          <div class="autocomplete-wrap" id="trustWrap">
+            <input type="text" class="field" id="trustInput" placeholder="Start typing your trust…" autocomplete="off">
+            <ul class="autocomplete-list hidden" id="trustList"></ul>
+          </div>
+          <p class="field-hint" id="trustHint"></p>
+        </div>
+
+        <!-- Sub-specialty tabs -->
+        <div class="field-group">
+          <label class="field-label">Current sub-specialty</label>
+          <p class="field-hint mb-hint" id="subspecHint">Select all that apply.</p>
+          <div class="tab-grid" id="subspecGrid"></div>
+        </div>
+
+        <button type="submit" class="btn-continue mt-lg">Continue</button>
+        <button type="button" class="btn-ghost-full" id="skipPrefs">Skip for now</button>
+
+      </form>
+    </div>
+  </div>
+
+  <!-- Hospital picker modal -->
+  <div class="modal-backdrop hidden" id="hospitalModal">
+    <div class="modal-popup">
+      <div class="modal-popup-header">
+        <h3 class="modal-popup-title" id="modalTrustName"></h3>
+        <p class="modal-popup-sub">Tap the hospitals you operate at</p>
+      </div>
+      <div class="tab-grid" id="hospitalsGrid"></div>
+      <button class="btn-continue" id="hospitalDone">Done</button>
+    </div>
+  </div>
+
+  <!-- Step 4: Preferences page 2 -->
+  <div class="screen hidden" id="screen-prefs2">
+    <a class="back-link" href="#" id="backToPrefs1">← Back</a>
+    <div class="auth-card">
+      <div class="logo">log.</div>
+      <h2 class="step-heading">Your favourites</h2>
+      <p class="step-sub">Select your regular supervisors and operations for one-tap logging.</p>
+
+      <form id="prefs2Form" novalidate>
+
+        <div class="field-group">
+          <label class="field-label">Consultants / supervisors</label>
+          <p class="field-hint mb-hint" id="consultantHint">Tap to select your regular supervisors.</p>
+          <div class="tab-grid" id="consultantsGrid"></div>
+        </div>
+
+        <div class="prefs-divider"></div>
+
+        <div class="field-group">
+          <label class="field-label">Common operations</label>
+          <p class="field-hint mb-hint" id="operationsHint">Tap to add operations you do regularly.</p>
+          <div class="tab-grid" id="operationsGrid"></div>
+        </div>
+
+        <button type="submit" class="btn-continue mt-lg">Finish setup</button>
+        <button type="button" class="btn-ghost-full" id="skipPrefs2">Skip for now</button>
+
+      </form>
+    </div>
+  </div>
+
+  <!-- Search modal -->
+  <div class="modal-backdrop hidden" id="searchModal">
+    <div class="modal-popup">
+      <div class="modal-popup-header" style="display:flex;align-items:center;justify-content:space-between;">
+        <div>
+          <h3 class="modal-popup-title" id="searchModalTitle">Add item</h3>
+          <p class="modal-popup-sub">Type to search, tap to add</p>
+        </div>
+        <button type="button" id="searchModalClose" style="background:none;border:none;color:rgba(255,255,255,0.4);font-size:1.5rem;cursor:pointer;padding:0;">✕</button>
+      </div>
+      <input type="text" class="field" id="searchModalInput" placeholder="Search…" autocomplete="off" style="margin-bottom:0.75rem;">
+      <ul class="autocomplete-list" id="searchModalList" style="position:static;border:none;max-height:300px;"></ul>
+    </div>
+  </div>
+
+  <!-- Step 5: Verify email -->
   <div class="screen hidden" id="screen-verify">
     <div class="auth-card auth-card-center">
       <div class="verify-icon">✉️</div>
@@ -191,6 +280,6 @@
     </div>
   </div>
 
-  <script src="signup.js"></script>
+  <script src="signup.js?v=6"></script>
 </body>
 </html>
